@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
-    public Animator animator;
+   // public Animator animator;
     public int speed = 2;
     public AudioSource audioWalking;
     private Rigidbody playerRigidbody;
@@ -32,14 +32,14 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         
-       animator.SetBool("run", false);
-        animator.SetBool("walk", true);
+ //      animator.SetBool("run", false);
+ //       animator.SetBool("walk", true);
 
-        animator = GetComponent<Animator>();
+   //     animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        animator = GetComponent<Animator>();
+  //      animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -85,18 +85,19 @@ public class PlayerScript : MonoBehaviour
         {
             moveDirection.y = movementDirectionY;
         }
-        if (Input.GetKeyDown(KeyCode.W)) 
-        { animator.SetBool("walk", true); }
+      /*  if (Input.GetKeyDown(KeyCode.W)) 
+       { animator.SetBool("walk", true); }
         else
         {
-            animator.SetBool("walk", false);
+  /        animator.SetBool("walk", false);
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         { animator.SetBool("run", true); }
         else
         {
-            animator.SetBool("run", false);
+           animator.SetBool("run", false);
         }
+      */
 
 
 

@@ -3,27 +3,31 @@ using TMPro;
 
 public class GunSystem : MonoBehaviour
 {
-    // Gun stats
+
     public int damage;
     public float timeBetweenShooting, spread, range, reloadTime, timeBetweenShots;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
+    public GameObject Pistol;
+    public GameObject AssaultRifle; 
 
-    // Bools
+    
     bool shooting, readyToShoot, reloading;
 
-    // References
+    
     public Camera fpsCam;
     public Transform attackPoint;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
     public Animator animator;
+    public Animator pistolAnimations;
+    public Animator assaultRifleAnimations;
 
-    // Graphics
     public GameObject muzzleFlash, bulletHoleGraphic;
     public float camShakeMagnitude, camShakeDuration;
     public TextMeshProUGUI text;
+  
 
     private void Awake()
     {
@@ -31,18 +35,46 @@ public class GunSystem : MonoBehaviour
         readyToShoot = true;
     }
 
+    private void Start()
+    {
+        allowButtonHold = true;
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown("1"))
+        {
+            animator.SetBool("PistolShoot", true);
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            animator.SetBool("ARShooting", true);
+        }
+
         MyInput();
         text.SetText(bulletsLeft + " / " + magazineSize);
+
+        print("ready to shoot=" + readyToShoot);
+        print("shoot=" + shooting);
+        print("reloading=" + reloading);
+        print("bullets left=" + bulletsLeft);
     }
 
     private void MyInput()
     {
-        if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        if (allowButtonHold)
+        {
+            shooting = Input.GetKey(KeyCode.Mouse0);
+        }
+        else
+        {
+            shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        {
+            Reload();
+        }
 
         // Shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
@@ -54,34 +86,34 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot()
     {
-        readyToShoot = false;
-        animator.SetTrigger("Fire");
+      
 
-        // Spread
+        readyToShoot = false;
+        
+
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
 
-        // Calculate Direction with Spread
+      
         Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
 
-        // RayCast
         if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
         {
             Debug.Log("Hit: " + rayHit.collider.name);
 
-            // Instantiate bullet hole at hit point
+     
             if (bulletHoleGraphic != null)
             {
                 GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
-                Destroy(hole, 5f); // Remove bullet hole after 5 seconds
+                Destroy(hole, 5f); 
             }
         }
 
-        // Muzzle Flash
+       
         if (muzzleFlash != null)
         {
             GameObject flashInstance = Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-            Destroy(flashInstance, 0.1f); // Remove muzzle flash after 0.1 seconds
+            Destroy(flashInstance, 0.1f); 
         }
 
         bulletsLeft--;
@@ -102,6 +134,8 @@ public class GunSystem : MonoBehaviour
     {
         reloading = true;
         animator.SetTrigger("Reload");
+        pistolAnimations.SetTrigger("Reload");
+        assaultRifleAnimations.SetTrigger("Reload");
         Invoke("ReloadFinished", reloadTime);
     }
 
@@ -110,4 +144,6 @@ public class GunSystem : MonoBehaviour
         bulletsLeft = magazineSize;
         reloading = false;
     }
+    //PUT THIS ON OTHER SCRIPT
+   
 }

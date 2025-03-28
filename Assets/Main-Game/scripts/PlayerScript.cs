@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
     public GravityControl gravityControl;
     public Camera playerCamera;
     public float walkSpeed = 7f;
-    public float runSpeed = 10f;
+    public float runSpeed = 20f;
     public float jumpPower = 7f;
     public float minusJumpPower = -7f;
     public float gravity = 9.81f;
@@ -39,6 +39,7 @@ public class PlayerScript : MonoBehaviour
 
    //     animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        characterController.height = 1.5f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
   //      animator = GetComponent<Animator>();

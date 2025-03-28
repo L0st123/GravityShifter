@@ -5,11 +5,13 @@ public class WeaponSwitcher : MonoBehaviour
     public GameObject weapon1;
     public GameObject weapon15;
     public GameObject weapon2;
+    public Animator animator;
 
     void Start()
     {
-        // Ensure only weapon 1 is active at the start
-        SelectWeapon(1);
+        animator.SetBool("ShootAR", false);
+        animator.SetBool("ShootPistol", false);
+        SelectWeapon(3);
     }
 
     void Update()
@@ -29,15 +31,33 @@ public class WeaponSwitcher : MonoBehaviour
     {
         if (weaponNumber == 1)
         {
-            weapon15.SetActive(true);
+            animator.SetBool("ShootAR", false);
+            animator.SetBool("ShootPistol", true);
             weapon1.SetActive(true);
             weapon2.SetActive(false);
         }
         else if (weaponNumber == 2)
         {
+            animator.SetBool("ShootAR", true);
+            animator.SetBool("ShootPistol", false);
             weapon1.SetActive(false);
-            weapon15.SetActive(false);
+            
             weapon2.SetActive(true);
         }
+        else if (weaponNumber == 3)
+        {
+            
+            weapon1.SetActive(false);
+            weapon2.SetActive(false);
+        }
+        
+        
+    }
+    public void EquipFinished()
+    {
+        animator.SetBool("ShootPistol", false);
+        animator.SetBool("ShootAR", false);
+
+        //allow shoot
     }
 }

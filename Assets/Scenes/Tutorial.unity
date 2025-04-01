@@ -262,110 +262,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
   m_PrefabInstance: {fileID: 959928201}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &64508580
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64508578}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &64508581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64508578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffad76c8f1b031542a09d8532cfea632, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHealth: 100
-  agent: {fileID: 64508584}
-  player: {fileID: 2011643996}
-  waypoints: []
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 128
-  sightRange: 5
-  attackRange: 2
-  walkPointRange: 20
-  timeBetweenAttacks: 1
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  animator: {fileID: 64508585}
-  capsuleCollider: {fileID: 64508586}
---- !u!143 &64508583
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64508578}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 5.82
-  m_Radius: 1.59
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 3.35, z: 0}
---- !u!195 &64508584
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64508578}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.97
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 6.67
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!95 &64508585
 Animator:
   serializedVersion: 7
@@ -411,6 +307,90 @@ CapsuleCollider:
   m_Height: 7.163488
   m_Direction: 1
   m_Center: {x: 0.08841651, y: 3.0817435, z: 0.23591928}
+--- !u!195 &64508588
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64508578}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.4
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 6.61
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &64508589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64508578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037b12f70bdc6c44f939eb11bf4f53ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 64508588}
+  startWaitTime: 4
+  timeToRotate: 2
+  speedWalk: 6
+  speedRun: 9
+  viewRadius: 15
+  viewAngle: 90
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  meshResolution: 1
+  edgeIterations: 4
+  edgeDistance: 0.5
+  waypoints:
+  - {fileID: 1731981593}
+  - {fileID: 1837145876}
+  - {fileID: 793787733}
+  - {fileID: 1209407392}
+  animator: {fileID: 64508585}
+  player: {fileID: 2011643989}
+--- !u!54 &64508590
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64508578}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &91649810
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 290150137}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 534235292}
   - component: {fileID: 534235294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun-P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1588,7 +1568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 790534615}
   - component: {fileID: 790534616}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun-P (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1796,7 +1776,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 901844280}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FOREARM-L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1890,22 +1870,19 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 64508581}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 64508580}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 64508583}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 64508584}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 64508585}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 64508586}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 64508589}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 64508588}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 64508590}
   m_SourcePrefab: {fileID: 100100000, guid: 9d498e398e4bae545a2fbfdac1bea3c9, type: 3}
 --- !u!1 &991307147
 GameObject:
@@ -2024,7 +2001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1032392219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2058,7 +2035,7 @@ GameObject:
   - component: {fileID: 1079550075}
   - component: {fileID: 1079550077}
   - component: {fileID: 1079550076}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2543,7 +2520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1192583420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3097,7 +3074,7 @@ GameObject:
   - component: {fileID: 1706547121}
   - component: {fileID: 1706547123}
   - component: {fileID: 1706547122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol) fired (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3182,7 +3159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711316601}
   - component: {fileID: 1711316602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun-AR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3855,9 +3832,10 @@ GameObject:
   - component: {fileID: 2011643997}
   - component: {fileID: 2011643999}
   - component: {fileID: 2011644000}
-  m_Layer: 0
+  - component: {fileID: 2011644001}
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4031,6 +4009,29 @@ MonoBehaviour:
   floatSpeed: 10
   gravity: 9.81
   isFlipped: 0
+--- !u!136 &2011644001
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011643989}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2078112700
 GameObject:
   m_ObjectHideFlags: 0
@@ -4340,7 +4341,7 @@ GameObject:
   - component: {fileID: 6075452720752485198}
   - component: {fileID: 7830966727760955931}
   - component: {fileID: 4376165913068729063}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4605,7 +4606,7 @@ GameObject:
   - component: {fileID: 8739031688573659457}
   - component: {fileID: 7089527071491913098}
   - component: {fileID: 7134109302216637407}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4622,7 +4623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652525530072}
   - component: {fileID: 6551547294057961820}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4639,7 +4640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652713069838}
   - component: {fileID: 809079164}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4794,7 +4795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1179608007675442506}
   - component: {fileID: 1951500747824902129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: armsLOW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4834,7 +4835,7 @@ GameObject:
   - component: {fileID: 715915618096950474}
   - component: {fileID: 1631600628268479461}
   - component: {fileID: 3155980712867500575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: main body.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4852,7 +4853,7 @@ GameObject:
   - component: {fileID: 2607418886530690607}
   - component: {fileID: 6760527808454400177}
   - component: {fileID: 2942035636637353070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5313,7 +5314,7 @@ GameObject:
   - component: {fileID: 1890769592894167688}
   - component: {fileID: 1305667124855099806}
   - component: {fileID: 7837749575761260126}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trigger.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5331,7 +5332,7 @@ GameObject:
   - component: {fileID: 3052335188814608129}
   - component: {fileID: 8960223478263928674}
   - component: {fileID: 427712138820598646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5349,7 +5350,7 @@ GameObject:
   - component: {fileID: 3052335189539656151}
   - component: {fileID: 8960223478386979252}
   - component: {fileID: 427712140352265632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5375,7 +5376,7 @@ GameObject:
   - component: {fileID: 6527992986336645639}
   - component: {fileID: 137430090356368646}
   - component: {fileID: 2867427753579855876}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5393,7 +5394,7 @@ GameObject:
   - component: {fileID: 6527992986180121809}
   - component: {fileID: 137430089170387920}
   - component: {fileID: 2867427751519774418}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5494,7 +5495,7 @@ GameObject:
   - component: {fileID: 4876517017173609993}
   - component: {fileID: 9168512206860880903}
   - component: {fileID: 6900658314330035690}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hammer thing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5633,7 +5634,7 @@ GameObject:
   - component: {fileID: 1510335639962185896}
   - component: {fileID: 6761925811729668913}
   - component: {fileID: 2715775179758288867}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol) fired
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5651,7 +5652,7 @@ GameObject:
   - component: {fileID: 1510335640587818622}
   - component: {fileID: 6761925813226356199}
   - component: {fileID: 2715775180911089973}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol) fired
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5669,7 +5670,7 @@ GameObject:
   - component: {fileID: 4346804788146091199}
   - component: {fileID: 928458990681653253}
   - component: {fileID: 97259457606754557}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rds.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5702,7 +5703,7 @@ GameObject:
   - component: {fileID: 8160280660571243312}
   - component: {fileID: 5436771126761089038}
   - component: {fileID: 13707601242945052}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: main body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5720,7 +5721,7 @@ GameObject:
   - component: {fileID: 8160280661823940070}
   - component: {fileID: 5436771126043102936}
   - component: {fileID: 13707602430611658}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: main body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5906,7 +5907,7 @@ GameObject:
   - component: {fileID: 7107268856773802902}
   - component: {fileID: 6422787381395229242}
   - component: {fileID: 349800154956221820}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5924,7 +5925,7 @@ GameObject:
   - component: {fileID: 7107268858471603520}
   - component: {fileID: 6422787383086492908}
   - component: {fileID: 349800155079076778}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5987,7 +5988,7 @@ GameObject:
   - component: {fileID: 2654098894051770087}
   - component: {fileID: 389068969016669839}
   - component: {fileID: 2136780882364393038}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet (pistol) shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6088,7 +6089,7 @@ GameObject:
   - component: {fileID: 6413465120887018136}
   - component: {fileID: 4472706094865481073}
   - component: {fileID: 7007984868601427308}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6114,7 +6115,7 @@ GameObject:
   - component: {fileID: 5564508851638573554}
   - component: {fileID: 9091622844800778816}
   - component: {fileID: 1704806521482603857}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mag.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6185,7 +6186,7 @@ GameObject:
   - component: {fileID: 3422723551903763212}
   - component: {fileID: 4221138546451523873}
   - component: {fileID: 8965559234733289648}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6284,7 +6285,7 @@ GameObject:
   - component: {fileID: 2467175694263782177}
   - component: {fileID: 6448453371375399690}
   - component: {fileID: 5287697797382599549}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6302,7 +6303,7 @@ GameObject:
   - component: {fileID: 2467175693008874999}
   - component: {fileID: 6448453373344060892}
   - component: {fileID: 5287697798644192683}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6319,7 +6320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9102125163958137917}
   - component: {fileID: 9102125163958137918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: assaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6413,7 +6414,7 @@ GameObject:
   - component: {fileID: 3175094268281733072}
   - component: {fileID: 7155601669051991011}
   - component: {fileID: 8158578466100910866}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}

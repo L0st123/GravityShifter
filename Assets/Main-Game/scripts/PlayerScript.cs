@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
@@ -20,51 +22,58 @@ public class PlayerScript : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
-   // public Animator animator;
     public int speed = 2;
     public AudioSource audioWalking;
     private Rigidbody playerRigidbody;
-    public GameObject playerObject; 
-
+    public GameObject playerObject;
+    public float healthPlayer;
     private bool canMove = true;
-
-    // Add a flag to check if gravity is inverted
     private bool isGravityInverted = false;
+    public GameObject deathScreen; 
+
 
     void Start()
     {
-        
- //      animator.SetBool("run", false);
- //       animator.SetBool("walk", true);
-
-   //     animator = GetComponent<Animator>();
+        healthPlayer = 100f;
         characterController = GetComponent<CharacterController>();
         characterController.height = 1.5f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-  //      animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // Check for user input to toggle gravity inversion
         if (Input.GetKeyDown(KeyCode.G))
         {
             ToggleGravity();
         }
-
+        print(healthPlayer);
         MoveKeys();
     }
 
-    // Function to toggle gravity inversion
     void ToggleGravity()
     {
         isGravityInverted = !isGravityInverted;
-
-        // Invert the gravity in the scene
         Physics.gravity = isGravityInverted ? new Vector3(0, -gravity, 0) : new Vector3(0, gravity, 0);
         transform.Rotate(180, 0, 0);
         Physics.SyncTransforms();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        healthPlayer -= damage;
+        if (healthPlayer <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Player has died");
+        canMove = false;
+        deathScreen.SetActive(true);
+        // Add respawn or game over logic here
     }
 
     void MoveKeys()
@@ -79,36 +88,18 @@ public class PlayerScript : MonoBehaviour
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded  )
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
-            
             moveDirection.y = jumpPower;
-            
         }
-
         else
         {
             moveDirection.y = movementDirectionY;
         }
-      /*  if (Input.GetKeyDown(KeyCode.W)) 
-       { animator.SetBool("walk", true); }
-        else
-        {
-  /        animator.SetBool("walk", false);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        { animator.SetBool("run", true); }
-        else
-        {
-           animator.SetBool("run", false);
-        }
-      */
-
-
 
         if (!characterController.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime * (isGravityInverted ? -1 : 1); 
+            moveDirection.y -= gravity * Time.deltaTime * (isGravityInverted ? -1 : 1);
         }
 
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
@@ -116,7 +107,6 @@ public class PlayerScript : MonoBehaviour
             characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
-
         }
         else
         {
@@ -125,7 +115,6 @@ public class PlayerScript : MonoBehaviour
             runSpeed = 10f;
         }
 
-       
         characterController.Move(moveDirection * Time.deltaTime);
 
         if (canMove)

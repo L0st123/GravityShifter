@@ -10,12 +10,12 @@ public class GunSystem : MonoBehaviour
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
     public GameObject Pistol;
-    public GameObject AssaultRifle; 
+    public GameObject AssaultRifle;
 
-    
+
     bool shooting, readyToShoot, reloading;
 
-    
+
     public Camera fpsCam;
     public Transform attackPoint;
     public RaycastHit rayHit;
@@ -27,7 +27,7 @@ public class GunSystem : MonoBehaviour
     public GameObject muzzleFlash, bulletHoleGraphic;
     public float camShakeMagnitude, camShakeDuration;
     public TextMeshProUGUI text;
-  
+
 
     private void Awake()
     {
@@ -86,34 +86,34 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot()
     {
-      
+
 
         readyToShoot = false;
-        
+
 
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
 
-      
+
         Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
 
         if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
         {
             Debug.Log("Hit: " + rayHit.collider.name);
 
-     
+
             if (bulletHoleGraphic != null)
             {
                 GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
-                Destroy(hole, 5f); 
+                Destroy(hole, 5f);
             }
         }
 
-       
+
         if (muzzleFlash != null)
         {
             GameObject flashInstance = Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-            Destroy(flashInstance, 0.1f); 
+            Destroy(flashInstance, 0.1f);
         }
 
         bulletsLeft--;
@@ -136,6 +136,9 @@ public class GunSystem : MonoBehaviour
         animator.SetTrigger("Reload");
         pistolAnimations.SetTrigger("Reload");
         assaultRifleAnimations.SetTrigger("Reload");
+
+        bulletsLeft = magazineSize;
+
         Invoke("ReloadFinished", reloadTime);
     }
 
@@ -144,6 +147,5 @@ public class GunSystem : MonoBehaviour
         bulletsLeft = magazineSize;
         reloading = false;
     }
-    //PUT THIS ON OTHER SCRIPT
-   
+
 }

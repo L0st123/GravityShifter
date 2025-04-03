@@ -29,7 +29,9 @@ public class PlayerScript : MonoBehaviour
     public float healthPlayer;
     private bool canMove = true;
     private bool isGravityInverted = false;
-    public GameObject deathScreen; 
+    public GameObject deathScreen;
+
+    string debugText;
 
 
     void Start()
@@ -39,10 +41,18 @@ public class PlayerScript : MonoBehaviour
         characterController.height = 1.5f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
     void Update()
     {
+        debugText = "";
+
+        debugText += "\nthis is stuff";
+        debugText += "\nMore stuff= " + isGravityInverted;
+
+
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             ToggleGravity();
@@ -91,7 +101,14 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
+
+
+            if (isGravityInverted == true)
+            {
+                moveDirection.y = -jumpPower;
+            }
         }
+        
         else
         {
             moveDirection.y = movementDirectionY;
@@ -124,5 +141,11 @@ public class PlayerScript : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 50, 200, 200), debugText);
     }
 }

@@ -14,8 +14,8 @@ public class enemyScript : MonoBehaviour
     public Animator animator;
     public CapsuleCollider capsuleCollider;
 
-    int waypointIndex;
-    bool alreadyAttacked;
+    private int waypointIndex;
+    private bool alreadyAttacked;
 
     private void Start()
     {
@@ -23,26 +23,12 @@ public class enemyScript : MonoBehaviour
         animator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider>();
 
-        if (agent == null)
-        {
-            Debug.LogError("NavMeshAgent missing on " + gameObject.name);
-        }
-
-        if (animator == null)
-        {
-            Debug.LogError("Animator missing on " + gameObject.name);
-        }
-
-        if (capsuleCollider == null)
-        {
-            Debug.LogError("CapsuleCollider missing on " + gameObject.name);
-        }
+        if (agent == null) Debug.LogError("NavMeshAgent missing on " + gameObject.name);
+        if (animator == null) Debug.LogError("Animator missing on " + gameObject.name);
+        if (capsuleCollider == null) Debug.LogError("CapsuleCollider missing on " + gameObject.name);
 
         player = GameObject.Find("PlayerBody")?.transform;
-        if (player == null)
-        {
-            Debug.LogError("PlayerBody not found in scene!");
-        }
+        if (player == null) Debug.LogError("PlayerBody not found in scene!");
 
         if (waypoints == null || waypoints.Length == 0)
         {
@@ -82,10 +68,7 @@ public class enemyScript : MonoBehaviour
 
     void Patrol()
     {
-        if (waypoints.Length == 0)
-        {
-            return;
-        }
+        if (waypoints.Length == 0) return;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -97,10 +80,7 @@ public class enemyScript : MonoBehaviour
 
     void ChasePlayer()
     {
-        if (player == null)
-        {
-            return;
-        }
+        if (player == null) return;
 
         agent.SetDestination(player.position);
         animator.SetBool("Walk", true);
@@ -108,10 +88,7 @@ public class enemyScript : MonoBehaviour
 
     void AttackPlayer()
     {
-        if (alreadyAttacked)
-        {
-            return;
-        }
+        if (alreadyAttacked) return;
 
         animator.SetBool("Walk", false);
         animator.SetTrigger("Attack");
@@ -127,6 +104,7 @@ public class enemyScript : MonoBehaviour
     public void TakeDamage(int damage)
     {
         enemyHealth -= damage;
+
         if (enemyHealth <= 0)
         {
             Die();

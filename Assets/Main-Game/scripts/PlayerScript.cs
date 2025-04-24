@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
 [RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class PlayerScript : MonoBehaviour
     public float walkSpeed = 7f;
     public float runSpeed = 20f;
     public float jumpPower = 7f;
-    public float minusJumpPower = -7f;
     public float gravity = 9.81f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
@@ -33,15 +31,14 @@ public class PlayerScript : MonoBehaviour
 
     string debugText;
 
-
     void Start()
     {
         healthPlayer = 100f;
         characterController = GetComponent<CharacterController>();
         characterController.height = 1.5f;
+        characterController.center = new Vector3(0, 0, 0);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
     void Update()
@@ -49,25 +46,30 @@ public class PlayerScript : MonoBehaviour
         debugText = "";
 
         debugText += "\nthis is stuff";
-        debugText += "\nMore stuff= " + isGravityInverted;
-
-
+        debugText += "\nMore stuff = " + isGravityInverted;
 
         if (Input.GetKeyDown(KeyCode.G))
         {
             ToggleGravity();
         }
-        print(healthPlayer);
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("Jump button pressed");
+        }
+
+        //print("player health"+ healthPlayer);
         MoveKeys();
     }
 
     void ToggleGravity()
     {
         isGravityInverted = !isGravityInverted;
-        Physics.gravity = isGravityInverted ? new Vector3(0, -gravity, 0) : new Vector3(0, gravity, 0);
         transform.Rotate(180, 0, 0);
+        characterController.center = new Vector3(0, isGravityInverted ? -0f : 0f, 0);
         Physics.SyncTransforms();
     }
+
 
     public void TakeDamage(float damage)
     {
@@ -80,11 +82,13 @@ public class PlayerScript : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Player has died");
+        if (deathScreen != null) deathScreen.SetActive(true);
         canMove = false;
-        deathScreen.SetActive(true);
-        // Add respawn or game over logic here
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
     }
+
 
     void MoveKeys()
     {
@@ -94,31 +98,27 @@ public class PlayerScript : MonoBehaviour
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
-        float movementDirectionY = moveDirection.y;
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        // Jumping
+        if (IsGrounded())
         {
-            moveDirection.y = jumpPower;
-
-
-            if (isGravityInverted == true)
+            if (Input.GetButtonDown("Jump") && canMove)
             {
-                moveDirection.y = -jumpPower;
+                moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
+            }
+            else
+            {
+                moveDirection.y = 0f;
             }
         }
-        
         else
         {
-            moveDirection.y = movementDirectionY;
+            moveDirection.y += (isGravityInverted ? gravity : -gravity) * Time.deltaTime;
         }
 
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.deltaTime * (isGravityInverted ? -1 : 1);
-        }
-
+        // Crouch
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
         {
             characterController.height = crouchHeight;
@@ -143,6 +143,14 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+
+    bool IsGrounded()
+    {
+        float distanceToGround = 0.2f;
+        Vector3 origin = transform.position;
+        Vector3 direction = isGravityInverted ? Vector3.up : Vector3.down;
+        return Physics.Raycast(origin, direction, distanceToGround + 0.1f);
+    }
 
     void OnGUI()
     {

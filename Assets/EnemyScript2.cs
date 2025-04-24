@@ -9,6 +9,7 @@ public class EnemyScript2 : MonoBehaviour
     public float timeToRotate = 2;
     public float speedWalk = 6;
     public float speedRun = 9;
+    public float health = 100f; 
 
     public float viewRadius = 15;
     public float viewAngle = 90;
@@ -35,7 +36,8 @@ public class EnemyScript2 : MonoBehaviour
     public GameObject player;
     public float attackRange = 2f;
     public float attackDamage = 10f;
-
+    public float attackCooldown = 1.5f;
+    float attackTimer;
     void Start()
     {
         animator.SetBool("walk", false);
@@ -66,6 +68,13 @@ public class EnemyScript2 : MonoBehaviour
         {
             Patroling();
         }
+        if (health <= 0 && !m_CaughtPlayer)
+        {
+            m_CaughtPlayer = true;
+            Death();
+
+        }
+        attackTimer += Time.deltaTime;
     }
 
     private void Chasing()
@@ -165,9 +174,14 @@ public class EnemyScript2 : MonoBehaviour
 
     void Attacking()
     {
-        Debug.Log("attacking player");
-        animator.SetTrigger("attack");
-        player.GetComponent<PlayerScript>().healthPlayer -= attackDamage;
+        if (attackTimer >= attackCooldown)
+        {
+            animator.SetTrigger("attack");
+            player.GetComponent<PlayerScript>().healthPlayer -= attackDamage;
+            attackTimer = 0;
+            Debug.Log("attacking player");
+        }
+       
     }
 
     void EnviromentView()
@@ -197,5 +211,20 @@ public class EnemyScript2 : MonoBehaviour
                 m_PlayerInRange = false;
             }
         }
+    }
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
+
+
+    void Death()
+    {
+        animator.SetTrigger("Death");
+        Destroy(gameObject);
     }
 }

@@ -12,7 +12,7 @@ public class GunSystem : MonoBehaviour
     public GameObject Pistol;
     public GameObject AssaultRifle;
 
-
+    EnemyScript2 enemyScript;
     bool shooting, readyToShoot, reloading;
 
 
@@ -27,6 +27,8 @@ public class GunSystem : MonoBehaviour
     public GameObject muzzleFlash, bulletHoleGraphic;
     public float camShakeMagnitude, camShakeDuration;
     public TextMeshProUGUI text;
+
+    public GameObject player;
 
 
     private void Awake()
@@ -53,7 +55,7 @@ public class GunSystem : MonoBehaviour
 
         MyInput();
         text.SetText(bulletsLeft + " / " + magazineSize);
-
+        print("enemy health = " + enemyScript.health);
         print("ready to shoot=" + readyToShoot);
         print("shoot=" + shooting);
         print("reloading=" + reloading);
@@ -95,18 +97,35 @@ public class GunSystem : MonoBehaviour
         float y = Random.Range(-spread, spread);
 
 
-        Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
+        Vector3 direction = player.transform.forward + new Vector3(x, y, 0);
 
-        if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
+
+     //   Debug.DrawRay(player.transform.position, direction * 10, Color.green, 20, false);
+
+
+        if (Physics.Raycast(player.transform.position, direction, out rayHit, Mathf.Infinity, whatIsEnemy))
         {
             Debug.Log("Hit: " + rayHit.collider.name);
-
+            EnemyScript2 hitEnemy = rayHit.collider.GetComponent<EnemyScript2>();
+            if (hitEnemy != null)
+            {
+                hitEnemy.health -= 10f;
+                print("enemy health = " + hitEnemy.health);
+            }
+            else
+            {
+                print("enemy objct is null");
+            }
 
             if (bulletHoleGraphic != null)
             {
                 GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
-                Destroy(hole, 5f);
+                Destroy(hole, 2f);
             }
+        }
+        else
+        {
+            print("shoot didn't hit anything");
         }
 
 
@@ -123,6 +142,11 @@ public class GunSystem : MonoBehaviour
 
         if (bulletsShot > 0 && bulletsLeft > 0)
             Invoke("Shoot", timeBetweenShots);
+
+
+
+
+
     }
 
     private void ResetShot()
@@ -137,7 +161,7 @@ public class GunSystem : MonoBehaviour
         pistolAnimations.SetTrigger("Reload");
         assaultRifleAnimations.SetTrigger("Reload");
 
-        bulletsLeft = magazineSize;
+        
 
         Invoke("ReloadFinished", reloadTime);
     }

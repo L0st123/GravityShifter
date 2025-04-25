@@ -57,7 +57,7 @@ public class GravityControl : MonoBehaviour
 
     void HandleGravityFlip()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             isFlipped = !isFlipped;
             velocity.y = 0f;  

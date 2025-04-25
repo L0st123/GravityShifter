@@ -20,6 +20,11 @@ public class GunSystem : MonoBehaviour
     public Transform attackPoint;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
+    public LayerMask target;
+
+
+
+
     public Animator animator;
     public Animator pistolAnimations;
     public Animator assaultRifleAnimations;
@@ -29,6 +34,12 @@ public class GunSystem : MonoBehaviour
     public TextMeshProUGUI text;
 
     public GameObject player;
+
+    public AudioSource audioSource; 
+    public AudioClip shootingSound;
+
+    public AudioClip reloadSound;
+    public float clipLength = 1f; 
 
 
     private void Awake()
@@ -44,6 +55,7 @@ public class GunSystem : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetKeyDown("1"))
         {
             animator.SetBool("PistolShoot", true);
@@ -73,9 +85,10 @@ public class GunSystem : MonoBehaviour
             shooting = Input.GetKeyDown(KeyCode.Mouse0);
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading || bulletsLeft == 0 && !reloading )
         {
             Reload();
+            audioSource.PlayOneShot(reloadSound);    
         }
 
         // Shoot
@@ -88,9 +101,18 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot()
     {
+      
+
+        if (bulletsLeft > 0)
+        {
+            audioSource.PlayOneShot(shootingSound);
+        }
 
 
-        readyToShoot = false;
+
+
+
+            readyToShoot = false;
 
 
         float x = Random.Range(-spread, spread);
@@ -120,13 +142,46 @@ public class GunSystem : MonoBehaviour
             if (bulletHoleGraphic != null)
             {
                 GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
-                Destroy(hole, 2f);
+                Destroy(hole, 1.5f);
             }
         }
         else
         {
             print("shoot didn't hit anything");
         }
+
+
+
+
+
+      /*  if (Physics.Raycast(player.transform.position, direction, out rayHit, Mathf.Infinity, target))
+        {
+            Debug.Log("Hit: " + rayHit.collider.name);
+            Target hitTarget = rayHit.collider.GetComponent<Target>();
+            if (hitTarget != null)
+            {
+                hitTarget.health -= 100f;
+                print("Target health = " + hitTarget.health);
+            }
+            else
+            {
+                print("target objct is null");
+            }
+
+            if (bulletHoleGraphic != null)
+            {
+                GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
+                Destroy(hole, 1.5f);
+            }
+        }
+        else
+        {
+            print("shoot didn't hit anything");
+        }
+      */
+
+
+
 
 
         if (muzzleFlash != null)

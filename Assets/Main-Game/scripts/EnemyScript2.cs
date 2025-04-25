@@ -38,6 +38,10 @@ public class EnemyScript2 : MonoBehaviour
     public float attackDamage = 10f;
     public float attackCooldown = 1.5f;
     float attackTimer;
+
+
+
+    PlayerScript playerScript;
     void Start()
     {
         animator.SetBool("walk", false);
@@ -179,6 +183,7 @@ public class EnemyScript2 : MonoBehaviour
             animator.SetTrigger("attack");
             player.GetComponent<PlayerScript>().healthPlayer -= attackDamage;
             attackTimer = 0;
+            
             Debug.Log("attacking player");
         }
        
@@ -226,5 +231,6 @@ public class EnemyScript2 : MonoBehaviour
     {
         animator.SetTrigger("Death");
         Destroy(gameObject);
+        
     }
 }

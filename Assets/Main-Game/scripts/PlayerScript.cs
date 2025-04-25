@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ public class PlayerScript : MonoBehaviour
 {
     public GravityControl gravityControl;
     public Camera playerCamera;
-    public float walkSpeed = 7f;
-    public float runSpeed = 20f;
+    public float walkSpeed = 15f;
+    public float runSpeed = 30f;
     public float jumpPower = 10f;
     public float gravity = 9.81f;
     public float lookSpeed = 2f;
@@ -28,12 +29,21 @@ public class PlayerScript : MonoBehaviour
     private bool canMove = true;
     private bool isGravityInverted = false;
     public GameObject deathScreen;
+    int healthLeft; 
+    public TextMeshProUGUI text;
+ 
 
     string debugText;
 
+    private void Awake()
+    {
+        healthPlayer = healthLeft;
+    }
     void Start()
     {
         healthPlayer = 100f;
+       
+
         characterController = GetComponent<CharacterController>();
     //    characterController.height = 1.5f;
       //  characterController.center = new Vector3(0, 0, 0);
@@ -47,8 +57,9 @@ public class PlayerScript : MonoBehaviour
 
         debugText += "\nthis is stuff";
         debugText += "\nMore stuff = " + isGravityInverted;
+        text.SetText(healthLeft + "|");
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ToggleGravity();
         }
@@ -57,7 +68,7 @@ public class PlayerScript : MonoBehaviour
         {
             Debug.Log("Jump button pressed");
         }
-
+       
         //print("player health"+ healthPlayer);
         MoveKeys();
     }
@@ -92,6 +103,7 @@ public class PlayerScript : MonoBehaviour
 
     void MoveKeys()
     {
+        
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 

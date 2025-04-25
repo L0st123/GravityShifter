@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour
     public Camera playerCamera;
     public float walkSpeed = 7f;
     public float runSpeed = 20f;
-    public float jumpPower = 7f;
+    public float jumpPower = 10f;
     public float gravity = 9.81f;
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
@@ -35,8 +35,8 @@ public class PlayerScript : MonoBehaviour
     {
         healthPlayer = 100f;
         characterController = GetComponent<CharacterController>();
-        characterController.height = 1.5f;
-        characterController.center = new Vector3(0, 0, 0);
+    //    characterController.height = 1.5f;
+      //  characterController.center = new Vector3(0, 0, 0);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -100,23 +100,23 @@ public class PlayerScript : MonoBehaviour
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        print("Grounded=" + gravityControl.IsGrounded());
 
         // Jumping
-        if (IsGrounded())
+        if (gravityControl.IsGrounded())
         {
             if (Input.GetButtonDown("Jump") && canMove)
             {
-                moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
+                Debug.Log("Jump button pressed");
+                //moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
+                gravityControl.DoJump();
             }
             else
             {
-                moveDirection.y = 0f;
+                //moveDirection.y = (isGravityInverted ? gravity : -gravity) * Time.deltaTime;
             }
         }
-        else
-        {
-            moveDirection.y += (isGravityInverted ? gravity : -gravity) * Time.deltaTime;
-        }
+        
 
         // Crouch
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
@@ -144,13 +144,7 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-    bool IsGrounded()
-    {
-        float distanceToGround = 0.2f;
-        Vector3 origin = transform.position;
-        Vector3 direction = isGravityInverted ? Vector3.up : Vector3.down;
-        return Physics.Raycast(origin, direction, distanceToGround + 0.1f);
-    }
+    
 
     void OnGUI()
     {

@@ -10,6 +10,10 @@ public class GravityControl : MonoBehaviour
     private Vector3 velocity;
     private bool isFloating = false;
     public bool isFlipped = false;
+    public bool isGravityInverted = false;
+    public float jumpPower = 10f;
+    public float distanceToGround = 1.2f;
+
 
     private Vector3 moveDirection;
 
@@ -77,5 +81,27 @@ public class GravityControl : MonoBehaviour
         {
             velocity.y = 0f;  
         }
+    }
+    public bool IsGrounded()
+    {
+        Vector3 origin = transform.position;
+        Vector3 direction = isGravityInverted ? Vector3.up : Vector3.down;
+        return Physics.Raycast(origin, direction, distanceToGround + 0.1f);
+    }
+
+
+    public void DoJump()
+    {
+        //velocity.y = isGravityInverted ? jumpPower : -jumpPower;
+
+        if (isGravityInverted)
+        {
+            velocity.y = -jumpPower;
+        }
+        else
+        {
+            velocity.y = jumpPower;
+        }
+
     }
 }

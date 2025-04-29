@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -41,6 +42,7 @@ public class EnemyScript2 : MonoBehaviour
 
 
 
+    Points pointsSystem; 
     PlayerScript playerScript;
     void Start()
     {
@@ -54,7 +56,8 @@ public class EnemyScript2 : MonoBehaviour
 
         m_CurrentWaypointIndex = 0;
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        playerScript = player.GetComponent<PlayerScript>();
+        pointsSystem = player.GetComponent<Points>();
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = speedWalk;
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
@@ -180,13 +183,20 @@ public class EnemyScript2 : MonoBehaviour
     {
         if (attackTimer >= attackCooldown)
         {
-            animator.SetTrigger("attack");
-            player.GetComponent<PlayerScript>().healthPlayer -= attackDamage;
+            animator.SetTrigger("Attack");
+
+            if (playerScript != null)
+            {
+                playerScript.TakeDamage(playerScript.attackDamage); 
+                Debug.Log("attacking player, new health: " + playerScript.healthPlayer);
+            }
+            else
+            {
+                Debug.LogWarning("playerScript is null!");
+            }
+
             attackTimer = 0;
-            
-            Debug.Log("attacking player");
         }
-       
     }
 
     void EnviromentView()
@@ -227,10 +237,19 @@ public class EnemyScript2 : MonoBehaviour
     }
 
 
-    void Death()
+    public void Death()
     {
         animator.SetTrigger("Death");
+        if (pointsSystem != null)
+        {
+            pointsSystem.points += 10f;
+        }
+        StartCoroutine(DelayedDestroy());
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(2.5f); 
         Destroy(gameObject);
-        
     }
 }

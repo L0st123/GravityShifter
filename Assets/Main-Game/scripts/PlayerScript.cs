@@ -7,8 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
-    public GravityControl gravityControl;
-    public Camera playerCamera;
+    
     public float walkSpeed = 15f;
     public float runSpeed = 30f;
     public float jumpPower = 10f;
@@ -18,46 +17,62 @@ public class PlayerScript : MonoBehaviour
     public float defaultHeight = 2f;
     public float crouchHeight = 1f;
     public float crouchSpeed = 3f;
-    private Vector3 moveDirection = Vector3.zero;
+    public float attackDamage = 10f;
     private float rotationX = 0;
+    public float healthPlayer;
+
+ 
+
+    private bool canMove = true;
+    private bool isGravityInverted = false;
+
+    private Vector3 moveDirection = Vector3.zero;
     private CharacterController characterController;
-    public int speed = 2;
     public AudioSource audioWalking;
     private Rigidbody playerRigidbody;
     public GameObject playerObject;
-    public float healthPlayer;
-    private bool canMove = true;
-    private bool isGravityInverted = false;
+   
+    public Camera playerCamera;
     public GameObject deathScreen;
-    int healthLeft; 
+    public GameObject mainUserInterface;
     public TextMeshProUGUI text;
- 
+
+    public GravityControl gravityControl;
+    EnemyScript2 enemyScript2;
+    GunSystem gunSystem;
 
     string debugText;
-
+    private float mouseSensitivity = 2f;
     private void Awake()
     {
-        healthPlayer = healthLeft;
+        
     }
     void Start()
     {
         healthPlayer = 100f;
-       
+        gunSystem = gunSystem.GetComponent<GunSystem>();
 
         characterController = GetComponent<CharacterController>();
     //    characterController.height = 1.5f;
       //  characterController.center = new Vector3(0, 0, 0);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
+        print("walk speed" + walkSpeed);
+        print("run speed " + runSpeed);
+        HandleCameraLook();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         debugText = "";
 
         debugText += "\nthis is stuff";
         debugText += "\nMore stuff = " + isGravityInverted;
-        text.SetText(healthLeft + "|");
+        text.SetText(" "+ healthPlayer);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -69,8 +84,24 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Jump button pressed");
         }
        
-        //print("player health"+ healthPlayer);
+        print("player health"+ healthPlayer);
         MoveKeys();
+    }
+    void HandleCameraLook()
+    {
+        if (!canMove || playerCamera == null) return;
+
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+       
+        transform.Rotate(0f, mouseX, 0f);
+
+        
+        rotationX -= mouseY;
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+
+        playerCamera.transform.localEulerAngles = new Vector3(rotationX, 0f, 0f);
     }
 
     void ToggleGravity()
@@ -93,11 +124,19 @@ public class PlayerScript : MonoBehaviour
 
     void Die()
     {
-        if (deathScreen != null) deathScreen.SetActive(true);
-        canMove = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        
+        if (deathScreen != null)
+        {
+            deathScreen.SetActive(true);
+             mainUserInterface.SetActive(false);
+               gunSystem.enabled = false;
+              gameObject.SetActive(false);
+            canMove = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+        }
+     
+
     }
 
 
@@ -140,19 +179,12 @@ public class PlayerScript : MonoBehaviour
         else
         {
             characterController.height = defaultHeight;
-            walkSpeed = 8f;
-            runSpeed = 10f;
+           
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
-        {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
+       
     }
 
 

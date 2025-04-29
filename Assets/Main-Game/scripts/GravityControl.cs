@@ -4,7 +4,7 @@ public class GravityControl : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float moveSpeed = 5f;
+   // public float moveSpeed = 10f;
     public float floatSpeed = 10f;
     public float gravity = 9.81f;
     private Vector3 velocity;
@@ -13,9 +13,13 @@ public class GravityControl : MonoBehaviour
     public bool isGravityInverted = false;
     public float jumpPower = 10f;
     public float distanceToGround = 1.2f;
-
+    PlayerScript playerScript;
 
     private Vector3 moveDirection;
+    void Start()
+    {
+        playerScript = GetComponent<PlayerScript>();
+    }
 
     void Update()
     {
@@ -43,7 +47,7 @@ public class GravityControl : MonoBehaviour
         moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized;
 
       
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        controller.Move(moveDirection * playerScript.walkSpeed* Time.deltaTime);
     }
 
      void ToggleFloat()

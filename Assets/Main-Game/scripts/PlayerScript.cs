@@ -20,14 +20,16 @@ public class PlayerScript : MonoBehaviour
     public float attackDamage = 10f;
     private float rotationX = 0;
     public float healthPlayer;
-
+    public float deathZone = 100f;
+    public GameObject playerArms;
+    
  
 
     private bool canMove = true;
     private bool isGravityInverted = false;
 
     private Vector3 moveDirection = Vector3.zero;
-    private CharacterController characterController;
+    public CharacterController characterController;
     public AudioSource audioWalking;
     private Rigidbody playerRigidbody;
     public GameObject playerObject;
@@ -40,6 +42,7 @@ public class PlayerScript : MonoBehaviour
     public GravityControl gravityControl;
     EnemyScript2 enemyScript2;
     GunSystem gunSystem;
+    
 
     string debugText;
     private float mouseSensitivity = 2f;
@@ -62,30 +65,33 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        if (canMove == true)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            MoveKeys();
+        }
+
         print("walk speed" + walkSpeed);
         print("run speed " + runSpeed);
         HandleCameraLook();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         debugText = "";
-
         debugText += "\nthis is stuff";
         debugText += "\nMore stuff = " + isGravityInverted;
-        text.SetText(" "+ healthPlayer);
+        text.SetText(" " + healthPlayer);
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && canMove)
         {
             ToggleGravity();
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && canMove)
         {
             Debug.Log("Jump button pressed");
         }
-       
-        print("player health"+ healthPlayer);
-        MoveKeys();
+
+        print("player health" + healthPlayer);
     }
     void HandleCameraLook()
     {
@@ -127,15 +133,22 @@ public class PlayerScript : MonoBehaviour
         if (deathScreen != null)
         {
             deathScreen.SetActive(true);
-             mainUserInterface.SetActive(false);
-               gunSystem.enabled = false;
-              gameObject.SetActive(false);
-            canMove = false;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
         }
-     
+
+       
+  
+       
+        canMove = false;
+        Cursor.lockState = CursorLockMode.None;
+       Cursor.visible = true;
+       
+        playerArms.SetActive(false);
+       
+        mainUserInterface.SetActive(false);
+        
+        Destroy(mainUserInterface);
+        
+
 
     }
 

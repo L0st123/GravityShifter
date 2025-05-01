@@ -3,7 +3,7 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour
 {
     public GameObject weapon1;
-    public GameObject weapon15;
+   // public GameObject weapon15;
     public GameObject weapon2;
     public Animator animator;
 

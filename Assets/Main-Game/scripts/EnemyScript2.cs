@@ -183,6 +183,8 @@ public class EnemyScript2 : MonoBehaviour
     {
         if (attackTimer >= attackCooldown)
         {
+            speedRun = 0;
+            speedWalk = 0;
             animator.SetTrigger("Attack");
 
             if (playerScript != null)
@@ -196,6 +198,11 @@ public class EnemyScript2 : MonoBehaviour
             }
 
             attackTimer = 0;
+        }
+        else
+        {
+            speedWalk = 6;
+            speedRun = 9;
         }
     }
 

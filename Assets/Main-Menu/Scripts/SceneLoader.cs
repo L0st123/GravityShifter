@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
@@ -18,5 +19,16 @@ public class SceneLoader : MonoBehaviour
         
         SceneManager.LoadScene("Tutorial");
     }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu2");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     
 }

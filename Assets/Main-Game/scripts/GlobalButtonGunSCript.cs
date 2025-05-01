@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class GlobalButtonGunSCript : MonoBehaviour
     public Button button1; 
     public Button button2;  
     public Button button3;
+ 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +41,7 @@ public class GlobalButtonGunSCript : MonoBehaviour
             button2.interactable = true;
             button3.interactable = false;
         }
+        
 
     }
 }

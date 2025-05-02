@@ -123,6 +123,7 @@ public class EnemyScript2 : MonoBehaviour
 
     private void Patroling()
     {
+        animator.SetBool("walk", true);
         if (m_PlayerNear)
         {
             if (m_TimeToRotate <= 0)
@@ -183,12 +184,12 @@ public class EnemyScript2 : MonoBehaviour
     {
         if (attackTimer >= attackCooldown)
         {
-            speedRun = 0;
-            speedWalk = 0;
+           
             animator.SetTrigger("Attack");
 
             if (playerScript != null)
             {
+                Stop();
                 playerScript.TakeDamage(playerScript.attackDamage); 
                 Debug.Log("attacking player, new health: " + playerScript.healthPlayer);
             }

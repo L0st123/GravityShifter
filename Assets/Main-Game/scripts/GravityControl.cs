@@ -96,7 +96,7 @@ public class GravityControl : MonoBehaviour
 
     public void DoJump()
     {
-        //velocity.y = isGravityInverted ? jumpPower : -jumpPower;
+        // velocity.y = isGravityInverted ? jumpPower : -jumpPower;
 
         if (isGravityInverted)
         {

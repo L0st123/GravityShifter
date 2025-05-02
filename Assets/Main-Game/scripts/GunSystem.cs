@@ -13,6 +13,7 @@ public class GunSystem : MonoBehaviour
     public GameObject AssaultRifle;
 
     EnemyScript2 enemyScript;
+    RangedEnemy rangedEnemy;
     bool shooting, readyToShoot, reloading;
 
 
@@ -128,11 +129,19 @@ public class GunSystem : MonoBehaviour
         if (Physics.Raycast(player.transform.position, direction, out rayHit, Mathf.Infinity, whatIsEnemy))
         {
             Debug.Log("Hit: " + rayHit.collider.name);
-            EnemyScript2 hitEnemy = rayHit.collider.GetComponent<EnemyScript2>();
-            if (hitEnemy != null)
+            EnemyScript2 hitEnemy = rayHit.collider.GetComponent<EnemyScript2>(); 
+            RangedEnemy hitRangedEnemy = rayHit.collider.GetComponent<RangedEnemy>();   
+
+            if (hitEnemy != null )
             {
                 hitEnemy.health -= 10f;
                 print("enemy health = " + hitEnemy.health);
+               
+            }
+            if ( hitRangedEnemy != null)
+            {
+                hitRangedEnemy.health -= 10f;
+                print("ranged enemy health = " + hitRangedEnemy.health);
             }
             else
             {

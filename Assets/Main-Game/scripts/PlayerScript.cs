@@ -172,7 +172,8 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetButtonDown("Jump") && canMove)
             {
                 Debug.Log("Jump button pressed");
-                moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
+                // moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
+                // moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
                 gravityControl.DoJump();
             }
             else

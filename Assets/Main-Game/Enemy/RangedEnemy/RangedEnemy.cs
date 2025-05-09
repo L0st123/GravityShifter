@@ -207,7 +207,7 @@ public class RangedEnemy : MonoBehaviour
         navMeshAgent.isStopped = true;
         if (pointsSystem != null)
         {
-            pointsSystem.points += 10f;
+            Points.points += 10f;
         }
         StartCoroutine(DestroyAfterDelay(2.5f));
     }

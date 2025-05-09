@@ -250,7 +250,7 @@ public class EnemyScript2 : MonoBehaviour
         animator.SetTrigger("Death");
         if (pointsSystem != null)
         {
-            pointsSystem.points += 10f;
+            Points.points += 10f;
         }
         StartCoroutine(DelayedDestroy());
     }

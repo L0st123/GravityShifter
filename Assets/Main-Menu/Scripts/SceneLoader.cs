@@ -14,7 +14,7 @@ public class SceneLoader : MonoBehaviour
     {
         
     }
-    public void SceneManage()
+    public void Tutorial()
     {
         
         SceneManager.LoadScene("Tutorial");
@@ -30,5 +30,23 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
     }
 
-    
+    public void Level1()
+    {
+        SceneManager.LoadScene("Level-1");
+    }
+
+    public void Level2()
+    {
+        SceneManager.LoadScene("Level-2");
+    }
+    public void Options()
+    {
+        SceneManager.LoadScene("Options");
+    }
+    public void LevelSelect()
+    {
+        SceneManager.LoadScene("LevelSelect");
+    }
+
+
 }

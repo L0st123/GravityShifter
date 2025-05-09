@@ -11,6 +11,7 @@ public class WeaponSwitcher : MonoBehaviour
     {
         animator.SetBool("ShootAR", false);
         animator.SetBool("ShootPistol", false);
+
         SelectWeapon(3);
     }
 
@@ -24,6 +25,10 @@ public class WeaponSwitcher : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SelectWeapon(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectWeapon(3);
         }
     }
 

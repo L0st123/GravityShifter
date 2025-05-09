@@ -4,7 +4,7 @@ public class Points : MonoBehaviour
 {
    
     public TextMeshProUGUI text;
-    public float points = 0f;
+    public static float points = 0f;
     private void Start()
     {
         points = 0f;

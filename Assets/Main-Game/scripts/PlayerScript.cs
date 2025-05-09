@@ -183,7 +183,7 @@ public class PlayerScript : MonoBehaviour
         }
         
 
-        // Crouch
+        /* // Crouch
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
         {
             characterController.height = crouchHeight;
@@ -195,7 +195,7 @@ public class PlayerScript : MonoBehaviour
             characterController.height = defaultHeight;
            
         }
-
+        */
         characterController.Move(moveDirection * Time.deltaTime);
 
        

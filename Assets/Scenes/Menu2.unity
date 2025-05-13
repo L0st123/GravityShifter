@@ -1377,7 +1377,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1510233058}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: SceneManage
+        m_MethodName: Tutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1894,7 +1894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 286, y: -230}
+  m_AnchoredPosition: {x: 286, y: -102}
   m_SizeDelta: {x: 1037.2366, y: 97.976685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1673513426

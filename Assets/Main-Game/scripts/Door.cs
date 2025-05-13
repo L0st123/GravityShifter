@@ -18,8 +18,8 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-     if (other.gameObject.tag =="Player" && Points.points == 30f)
+
+        if (other.gameObject.tag == "Player" && Points.points == 60f) 
         {
             Debug.Log("if your reading this you are gay");
             SceneManager.LoadScene("Level-1");

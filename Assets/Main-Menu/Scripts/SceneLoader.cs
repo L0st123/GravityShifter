@@ -1,8 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
+    private int currentSceneIndex;
+    private int sceneToContinue;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,8 +26,39 @@ public class SceneLoader : MonoBehaviour
 
     public void Menu()
     {
-        SceneManager.LoadScene("Menu2");
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Avoid saving the menu scene
+        if (currentSceneIndex != 0)
+        {
+            PlayerPrefs.SetInt("SavedScene", currentSceneIndex);
+            PlayerPrefs.Save();
+        }
+
+        SceneManager.LoadScene(0);
     }
+
+    public void ContinueGame()
+    {
+        if (!PlayerPrefs.HasKey("SavedScene"))
+        {
+            Debug.LogWarning("No saved scene found.");
+            return;
+        }
+
+        int sceneToContinue = PlayerPrefs.GetInt("SavedScene");
+
+        if (sceneToContinue > 0)
+        {
+            Debug.Log("Continuing to scene index: " + sceneToContinue);
+            SceneManager.LoadScene(sceneToContinue);
+        }
+        else
+        {
+            Debug.LogWarning("Saved scene index is 0 or invalid.");
+        }
+    }
+
 
     public void QuitGame()
     {

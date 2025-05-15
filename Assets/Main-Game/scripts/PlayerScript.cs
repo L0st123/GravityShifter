@@ -22,7 +22,7 @@ public class PlayerScript : MonoBehaviour
     public float healthPlayer;
     public float deathZone = 100f;
     public GameObject playerArms;
-    
+    public GameObject menuScreen;
  
 
     private bool canMove = true;
@@ -151,6 +151,7 @@ public class PlayerScript : MonoBehaviour
 
 
     }
+   
 
 
     void MoveKeys()
@@ -181,22 +182,41 @@ public class PlayerScript : MonoBehaviour
                 //moveDirection.y = (isGravityInverted ? gravity : -gravity) * Time.deltaTime;
             }
         }
-        
 
-        /* // Crouch
-        if (Input.GetKey(KeyCode.LeftControl) && canMove)
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            characterController.height = crouchHeight;
-            walkSpeed = crouchSpeed;
-            runSpeed = crouchSpeed;
+            if (menuScreen != null)
+            {
+                menuScreen.SetActive(true);
+            }
+
+            canMove = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            playerArms.SetActive(false);
+
+            mainUserInterface.SetActive(false);
+
+            Destroy(mainUserInterface);
+
+
         }
-        else
-        {
-            characterController.height = defaultHeight;
-           
-        }
-        */
-        characterController.Move(moveDirection * Time.deltaTime);
+
+            /* // Crouch
+            if (Input.GetKey(KeyCode.LeftControl) && canMove)
+            {
+                characterController.height = crouchHeight;
+                walkSpeed = crouchSpeed;
+                runSpeed = crouchSpeed;
+            }
+            else
+            {
+                characterController.height = defaultHeight;
+
+            }
+            */
+            characterController.Move(moveDirection * Time.deltaTime);
 
        
     }

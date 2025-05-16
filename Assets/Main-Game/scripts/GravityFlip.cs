@@ -64,10 +64,18 @@ public class GravityFlip : MonoBehaviour
     void FlipGravity()
     {
         isFlipped = !isFlipped;
-        velocity.y = 0f; 
+        velocity.y = 0f;
 
-        // Smoothly rotate on the Z-axis
+        
         targetRotation *= Quaternion.Euler(0, 0, -180);
+
+        
+        GravityControl gc = GetComponent<GravityControl>();
+        if (gc != null)
+        {
+            gc.isGravityInverted = isFlipped;
+        }
+
         Debug.Log("Gravity Flipped");
     }
 }

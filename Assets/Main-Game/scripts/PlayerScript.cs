@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerScript : MonoBehaviour
 {
-    
     public float walkSpeed = 15f;
     public float runSpeed = 30f;
     public float jumpPower = 10f;
@@ -23,17 +22,17 @@ public class PlayerScript : MonoBehaviour
     public float deathZone = 100f;
     public GameObject playerArms;
     public GameObject menuScreen;
- 
 
     private bool canMove = true;
     private bool isGravityInverted = false;
+    private bool isPaused = false;  
 
     private Vector3 moveDirection = Vector3.zero;
     public CharacterController characterController;
     public AudioSource audioWalking;
     private Rigidbody playerRigidbody;
     public GameObject playerObject;
-   
+
     public Camera playerCamera;
     public GameObject deathScreen;
     public GameObject mainUserInterface;
@@ -42,22 +41,21 @@ public class PlayerScript : MonoBehaviour
     public GravityControl gravityControl;
     EnemyScript2 enemyScript2;
     GunSystem gunSystem;
-    
 
     string debugText;
     private float mouseSensitivity = 2f;
+
     private void Awake()
     {
-        
     }
+
     void Start()
     {
+        Time.timeScale = 1f;
         healthPlayer = 100f;
         gunSystem = gunSystem.GetComponent<GunSystem>();
 
         characterController = GetComponent<CharacterController>();
-    //    characterController.height = 1.5f;
-      //  characterController.center = new Vector3(0, 0, 0);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -70,6 +68,10 @@ public class PlayerScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             MoveKeys();
+        }
+        if (!canMove)
+        {
+            return;
         }
 
         print("walk speed" + walkSpeed);
@@ -93,6 +95,7 @@ public class PlayerScript : MonoBehaviour
 
         print("player health" + healthPlayer);
     }
+
     void HandleCameraLook()
     {
         if (!canMove || playerCamera == null) return;
@@ -100,10 +103,8 @@ public class PlayerScript : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-       
         transform.Rotate(0f, mouseX, 0f);
 
-        
         rotationX -= mouseY;
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
 
@@ -117,8 +118,7 @@ public class PlayerScript : MonoBehaviour
         characterController.center = new Vector3(0, isGravityInverted ? -0f : 0f, 0);
         Physics.SyncTransforms();
     }
-
-
+    
     public void TakeDamage(float damage)
     {
         healthPlayer -= damage;
@@ -135,28 +135,19 @@ public class PlayerScript : MonoBehaviour
             deathScreen.SetActive(true);
         }
 
-       
-  
-       
+        Time.timeScale = 0f;
         canMove = false;
         Cursor.lockState = CursorLockMode.None;
-       Cursor.visible = true;
-       
-        playerArms.SetActive(false);
-       
+        Cursor.visible = true;
+
+        
         mainUserInterface.SetActive(false);
-        
-        Destroy(mainUserInterface);
-        
 
-
+       
     }
-   
-
 
     void MoveKeys()
     {
-        
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -173,56 +164,80 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetButtonDown("Jump") && canMove)
             {
                 Debug.Log("Jump button pressed");
-                // moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
-                // moveDirection.y = isGravityInverted ? -jumpPower : jumpPower;
                 gravityControl.DoJump();
             }
-            else
-            {
-                //moveDirection.y = (isGravityInverted ? gravity : -gravity) * Time.deltaTime;
-            }
         }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (menuScreen != null)
-            {
-                menuScreen.SetActive(true);
-            }
-
-            canMove = false;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            playerArms.SetActive(false);
-
-            mainUserInterface.SetActive(false);
-
-            Destroy(mainUserInterface);
-
-
-        }
-
-            /* // Crouch
-            if (Input.GetKey(KeyCode.LeftControl) && canMove)
-            {
-                characterController.height = crouchHeight;
-                walkSpeed = crouchSpeed;
-                runSpeed = crouchSpeed;
-            }
-            else
-            {
-                characterController.height = defaultHeight;
-
-            }
-            */
-            characterController.Move(moveDirection * Time.deltaTime);
 
        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (!isPaused)
+            {
+                
+                if (menuScreen != null)
+                {
+                    menuScreen.SetActive(true);
+                }
+
+                canMove = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+               
+                mainUserInterface.SetActive(false);
+
+                isPaused = true;
+            }
+            else
+            {
+                
+                if (menuScreen != null)
+                {
+                    menuScreen.SetActive(false);
+                }
+
+                canMove = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+               
+                mainUserInterface.SetActive(true);
+
+                isPaused = false;
+            }
+        }
+
+        characterController.Move(moveDirection * Time.deltaTime);
     }
+    public void ResumeGame()
+    {
+        if (menuScreen != null)
+        {
+            menuScreen.SetActive(false);
+        }
 
+        canMove = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+        playerArms.SetActive(true);
+        mainUserInterface.SetActive(true);
+    }
+    public void Respawn()
+    {
+        if (deathScreen != null)
+        {
+            deathScreen.SetActive(false);
+        }
 
-    
+        healthPlayer = 100f; 
+        canMove = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+        playerArms.SetActive(true);
+        mainUserInterface.SetActive(true);
+    }
 
     void OnGUI()
     {

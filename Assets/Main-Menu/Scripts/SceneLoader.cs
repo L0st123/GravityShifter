@@ -35,7 +35,7 @@ public class SceneLoader : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu2");
     }
 
     public void ContinueGame()

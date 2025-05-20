@@ -7582,12 +7582,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3abf59b5be1f54b9e15e9dc7f7a8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  timeBetweenShooting: 0.05
+  damage: 10
+  timeBetweenShooting: 0.15
   spread: 0.05
   range: 500
   reloadTime: 1
-  timeBetweenShots: 0.2
+  timeBetweenShots: 0.15
   magazineSize: 30
   bulletsPerTap: 1
   allowButtonHold: 1
@@ -131299,7 +131299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3abf59b5be1f54b9e15e9dc7f7a8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 40
   timeBetweenShooting: 0.5
   spread: 0.05
   range: 500

@@ -68,7 +68,7 @@ public class GunSystem : MonoBehaviour
 
         MyInput();
         text.SetText(bulletsLeft + " / " + magazineSize);
-        print("enemy health = " + enemyScript.health);
+        
         print("ready to shoot=" + readyToShoot);
         print("shoot=" + shooting);
         print("reloading=" + reloading);
@@ -151,7 +151,7 @@ public class GunSystem : MonoBehaviour
             if (bulletHoleGraphic != null)
             {
                 GameObject hole = Instantiate(bulletHoleGraphic, rayHit.point + rayHit.normal * 0.01f, Quaternion.LookRotation(rayHit.normal));
-                Destroy(hole, 1.5f);
+                Destroy(hole, 0.5f);
             }
         }
         else

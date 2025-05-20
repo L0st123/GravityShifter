@@ -21,7 +21,7 @@ public class Door2 : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && Points.points == 150f)
         {
-            Debug.Log("if your reading this you are gay");
+            Debug.Log("");
             SceneManager.LoadScene("Level-2");
         }
     }

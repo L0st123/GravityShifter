@@ -78,9 +78,7 @@ public class PlayerScript : MonoBehaviour
         print("run speed " + runSpeed);
         HandleCameraLook();
 
-        debugText = "";
-        debugText += "\nthis is stuff";
-        debugText += "\nMore stuff = " + isGravityInverted;
+       
         text.SetText(" " + healthPlayer);
 
         if (Input.GetKeyDown(KeyCode.E) && canMove)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class door3 : MonoBehaviour
 {
@@ -12,5 +13,14 @@ public class door3 : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.tag == "Player" && Points.points == 60f)
+        {
+            Debug.Log("");
+            SceneManager.LoadScene("Menu2");
+        }
     }
 }

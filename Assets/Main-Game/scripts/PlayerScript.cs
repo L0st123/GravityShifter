@@ -40,7 +40,7 @@ public class PlayerScript : MonoBehaviour
 
     public GravityControl gravityControl;
     EnemyScript2 enemyScript2;
-    GunSystem gunSystem;
+ 
 
     string debugText;
     private float mouseSensitivity = 2f;
@@ -53,7 +53,7 @@ public class PlayerScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         healthPlayer = 100f;
-        gunSystem = gunSystem.GetComponent<GunSystem>();
+       
 
         characterController = GetComponent<CharacterController>();
 

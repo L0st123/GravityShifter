@@ -182,28 +182,25 @@ public class EnemyScript2 : MonoBehaviour
 
     void Attacking()
     {
+        
         if (attackTimer >= attackCooldown)
         {
-           
             animator.SetTrigger("Attack");
 
+            
             if (playerScript != null)
             {
-                Stop();
-                playerScript.TakeDamage(playerScript.attackDamage); 
-                Debug.Log("attacking player, new health: " + playerScript.healthPlayer);
+                Stop();  
+                playerScript.TakeDamage(attackDamage);  
+                Debug.Log("Attacking player, new health: " + playerScript.healthPlayer);
             }
             else
             {
                 Debug.LogWarning("playerScript is null!");
             }
 
+            
             attackTimer = 0;
-        }
-        else
-        {
-            speedWalk = 6;
-            speedRun = 9;
         }
     }
 

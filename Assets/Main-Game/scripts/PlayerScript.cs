@@ -23,7 +23,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject playerArms;
     public GameObject menuScreen;
 
-    private bool canMove = true;
+    public bool canMove = true;
     private bool isGravityInverted = false;
     private bool isPaused = false;  
 

@@ -21,6 +21,20 @@ public class door3 : MonoBehaviour
         {
             Debug.Log("");
             SceneManager.LoadScene("Menu2");
+
+            /*  if (winScreen != null)
+            {
+                winScreen.SetActive(true);
+            }
+
+            Time.timeScale = 0f;
+            playerScript.canMove = false;   
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+
+            mainUserInterface.SetActive(false);
+          */
         }
     }
 }
